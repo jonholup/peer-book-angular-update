@@ -97,6 +97,7 @@ router.delete('/delete/:id', function(req, res){
 router.put('/save/:id', function(req, res){
   var bookId = req.params.id;
   var bookObject = req.body;
+  console.log('bookObject:', bookObject);
   // UPDATE books SET title='The Yodler' WHERE id=40;
   console.log('book of id to save: ', bookId);
   // Connecting to, and deleting row from the database
@@ -108,8 +109,8 @@ router.put('/save/:id', function(req, res){
     } else {
       // We connected to the database!!!
       // Now, we're gonna' update stuff!!!!!
-      client.query('UPDATE books SET title=$1 WHERE id=$2;', // This is the SQL query
-      [bookObject.title, bookId], // This is the array of things that replaces the $1, $2, $3 in the query
+      client.query('UPDATE books SET title=$1, author=$2, edition=$3, publisher=$4 WHERE id=$5;', // This is the SQL query
+      [bookObject.title, bookObject.author, bookObject.edition, bookObject.publisher, bookId], // This is the array of things that replaces the $1, $2, $3 in the query
       function(errorMakingQuery, result){ // This is the function that runs after the query takes place
         done();
         if(errorMakingQuery) {
